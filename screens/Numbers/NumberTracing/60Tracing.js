@@ -1,0 +1,309 @@
+import React, { Component } from 'react';
+import { View, Dimensions, Image, TouchableOpacity, StatusBar } from 'react-native';
+import { withNavigation } from 'react-navigation';
+
+import PencilIcon from '../../images/Pencil_icon.png';
+
+import trace1 from '../numberTracingGIF/6_1.gif';
+import shaded_6_1 from '../numberTracingImage/shaded_6_1.png';
+
+import traceNumber from '../numberTracingImage/6.png';
+import traceZero from '../numberTracingImage/0.png';
+
+import shaded_0 from '../numberTracingImage/shaded_0.png';
+
+import trace2 from '../numberTracingGIF/0.gif';
+
+import {globalStyleSheet as styles} from '../../globalStyleSheet/globalStyleSheet.js'; 
+import { scopeX, scopeY, trail } from '../numbersImport';
+import {sound} from '../../HomePage';
+import RNSketchCanvas from '@terrylinla/react-native-sketch-canvas';
+
+const screenWidth = Dimensions.get('screen').width;
+const screenHeight = Dimensions.get('screen').height;
+
+const shadedLine = [shaded_6_1, shaded_0];
+const tracingLine = [trace1, trace2];
+
+const boardDimension = {
+    width: screenWidth * 0.75,
+    height: screenHeight * 0.7,
+};
+
+const numberDimension = {
+    width: boardDimension.width * 0.35,
+    height: boardDimension.height * 0.9,
+}
+
+const numberDimension2 = {
+    width: boardDimension.width * 0.35,
+    height: boardDimension.height * 0.9,
+}
+
+class SixtyTracing extends Component {
+    static navigationOptions = {
+        header: null,
+    }
+
+    constructor(props) {
+        super(props);
+        this. state = {
+            //Tracing State
+            shaded: shaded_6_1,
+            tracing: trace1,
+            tracing2: traceZero,
+            shaded2: shaded_0,
+            lineIndex: 0,
+            showShaded: 0,
+            showShaded2: 0,
+            showTracing: 1,
+            showTracing2: 1,
+            dot1: false,
+            dot2: false,
+            dot3: false,
+            dot4: false,
+            dot5: false,
+            dot6: false,
+            dot7: false,
+            dot8: false,
+            fot9: false,
+            dot10: false,
+            dot11: false,
+            dot12: false,
+            dot13: false,
+            dot14: false,
+            dot15: false,
+            dot16: false,
+        },
+
+        // Dots Locations
+        this.line1= [{
+            x: screenWidth * 0.38,
+            y: screenHeight * 0.29,
+        }, {
+            x: screenWidth * 0.29,
+            y: screenHeight * 0.42,
+        }, {
+            x: screenWidth * 0.32,
+            y: screenHeight * 0.76,
+        }, {
+            x: screenWidth * 0.445,
+            y: screenHeight * 0.72,
+        }, {
+            x: screenWidth * 0.4,
+            y: screenHeight * 0.505,
+        }, {
+
+            x: screenWidth * 0.57,
+            y: screenHeight * 0.35,
+        }, {
+            x: screenWidth * 0.57,
+            y: screenHeight * 0.725,
+        }, {
+            x: screenWidth * 0.69,
+            y: screenHeight * 0.74,
+        }, {
+            x: screenWidth * 0.7,
+            y: screenHeight * 0.39,
+        }, ];
+    }
+
+    numberTrace = (X, Y) => {
+        if(!this.state.dot1) {
+            this.setState({dot1: 
+                ((X >= this.line1[0].x - scopeX && X <= this.line1[0].x + scopeX) && 
+                (Y >= this.line1[0].y - scopeY && Y <= this.line1[0].y + scopeY)) ? true : false});
+        
+        } else if(this.state.dot1 && !this.state.dot2) {
+            this.setState({dot2: 
+                ((X >= this.line1[1].x - scopeX && X <= this.line1[1].x + scopeX) && 
+                (Y >= this.line1[1].y - scopeY && Y <= this.line1[1].y + scopeY)) ? true : false});
+        
+        } else if(this.state.dot2 && !this.state.dot3) {
+            this.setState({dot3: 
+                ((X >= this.line1[2].x - scopeX && X <= this.line1[2].x + scopeX) && 
+                (Y >= this.line1[2].y - scopeY && Y <= this.line1[2].y + scopeY)) ? true : false});
+        
+        } else if(this.state.dot3 && !this.state.dot4) {
+            this.setState({dot4: 
+                ((X >= this.line1[3].x - scopeX && X <= this.line1[3].x + scopeX) && 
+                (Y >= this.line1[3].y - scopeY && Y <= this.line1[3].y + scopeY)) ? true : false});
+        
+        } else if(this.state.dot4 && !this.state.dot5) {
+            this.setState({dot5: 
+                ((X >= this.line1[4].x - scopeX && X <= this.line1[4].x + scopeX) && 
+                (Y >= this.line1[4].y - scopeY && Y <= this.line1[4].y + scopeY)) ? true : false});
+        
+        } else if(this.state.dot5 && !this.state.dot6) {
+            this.setState({dot6: 
+                ((X >= this.line1[5].x - scopeX && X <= this.line1[5].x + scopeX) && 
+                (Y >= this.line1[5].y - scopeY && Y <= this.line1[5].y + scopeY)) ? true : false});
+        
+        } else if(this.state.dot6 && !this.state.dot7) {
+            this.setState({dot7: 
+                ((X >= this.line1[6].x - scopeX && X <= this.line1[6].x + scopeX) && 
+                (Y >= this.line1[6].y - scopeY && Y <= this.line1[6].y + scopeY)) ? true : false});
+        
+        } else if(this.state.dot7 && !this.state.dot8) {
+            this.setState({dot8: 
+                ((X >= this.line1[7].x - scopeX && X <= this.line1[7].x + scopeX) && 
+                (Y >= this.line1[7].y - scopeY && Y <= this.line1[7].y + scopeY)) ? true : false});
+        
+        } else if(this.state.dot8 && !this.state.dot9) {
+            this.setState({dot9: 
+                ((X >= this.line1[8].x - scopeX && X <= this.line1[8].x + scopeX) && 
+                (Y >= this.line1[8].y - scopeY && Y <= this.line1[8].y + scopeY)) ? true : false});
+        
+        } 
+    }
+
+    ifTraced = () => {
+        if(this.state.dot5) {
+            if(this.state.dot9) {
+                this.setState({showTracing2: 1, tracing2: shaded_0});
+            } else {
+                this.setState({tracing: shaded_6_1, dot7: false, dot8: false, showTracing2: 1,
+                    dot9: false, dot6: false, showTracing: 1, tracing2: trace2,});
+            }
+        } else {
+        //  alert('After Release!');
+            this.clearBoard();
+        }
+    }
+
+    clearBoard = () => {
+        this.setState({dot1: false, dot2: false, dot3: false, dot4: false, dot5: false, dot6: false,
+            dot7: false, dot8: false, dot9: false, tracing: trace1, tracing2: traceZero,
+            showTracing: 1, showShaded2: 0, showTracing2: 1, showShaded: 0});
+    }
+
+    render() {
+
+        StatusBar.setHidden(true);
+        return (
+            <View style={{position: 'absolute', 
+                        width: boardDimension.width, height: boardDimension.height, 
+                        top: '20%', left: '12.5%', backgroundColor: 'rgba(255, 255, 255, 0.000000001)'}}>
+
+                    {/* Two Tracing */}
+                    <View style={{position: 'absolute', width: numberDimension.width, 
+                                height: numberDimension.height, 
+                                top: '5%', left: '15%', opacity: this.state.showTracing,}}>
+                        <Image source={this.state.tracing} style={{width: '100%', height: '100%', resizeMode: 'stretch'}}></Image>
+                        {/* <View style={[styles.dot, {top: numberDimension.height * 0.15,
+                            left: numberDimension.width * 0.78}]}></View>
+                        <View style={[styles.dot, {top: numberDimension.height * 0.08,
+                            left: numberDimension.width * 0.5}]}></View>
+                        <View style={[styles.dot, {top: numberDimension.height * 0.25,
+                            left: numberDimension.width * 0.18}]}></View>
+
+                        <View style={[styles.dot, {top: numberDimension.height * 0.5,
+                            left: numberDimension.width * 0.1}]}></View>
+                        <View style={[styles.dot, {top: numberDimension.height * 0.75,
+                            left: numberDimension.width * 0.2}]}></View>
+                        <View style={[styles.dot, {top: numberDimension.height * 0.88,
+                            left: numberDimension.width * 0.5}]}></View>
+                        <View style={[styles.dot, {top: numberDimension.height * 0.75,
+                            left: numberDimension.width * 0.82}]}></View>
+                        <View style={[styles.dot, {top: numberDimension.height * 0.55,
+                            left: numberDimension.width * 0.84}]}></View>
+                        <View style={[styles.dot, {top: numberDimension.height * 0.4,
+                            left: numberDimension.width * 0.6}]}></View>
+                        
+                        <View style={[styles.dot, {top: numberDimension.height * 0.42,
+                            left: numberDimension.width * 0.35}]}></View> */}
+                    </View>
+
+
+                    {/* Zero Tracing */}
+                    <View style={{position: 'absolute', width: numberDimension.width, 
+                                height: numberDimension.height, 
+                                top: '5%', left: '50%', opacity: this.state.showTracing2,}}>
+                        <Image source={this.state.tracing2} style={{width: '100%', height: '100%', resizeMode: 'stretch'}}></Image>
+                    </View>
+                    <View style={{ flex: 1,
+                    flexDirection: 'row', justifyContent: 'center',
+                        alignItems: 'center'}} >
+                        <RNSketchCanvas
+                            containerStyle={{backgroundColor: 'transparent', flex: 1}}
+                            canvasStyle={{backgroundColor: 'transparent', flex: 1,}}
+                            defaultStrokeIndex={0}
+                            defaultStrokeWidth={screenWidth * 0.06}
+                            onStrokeChanged={(X, Y)=>{
+                                this.numberTrace(X, Y);
+                            }}
+
+                            onStrokeEnd={()=>{
+                                this.ifTraced();
+                            }}
+                                />
+                    </View>
+
+                    {/* Pencil Button */}
+                    <View style={{position: 'absolute',
+                        top: '4%', width: '8%', height: '30%',}} >
+                        <TouchableOpacity onPress={this.clearBoard}>
+                            <Image
+                            source={PencilIcon}
+                                style={styles.containImage}
+                            ></Image>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                // <View style={[styles.dot, {top: screenHeight * 0.29,
+                //     left: screenWidth * 0.38}]}></View>
+                // <View style={[styles.dot, {top: screenHeight * 0.42,
+                //     left: screenWidth * 0.29}]}></View>
+                // <View style={[styles.dot, {top: screenHeight * 0.76,
+                //     left: screenWidth * 0.32}]}></View>
+                // <View style={[styles.dot, {top: screenHeight * 0.72,
+                //     left: screenWidth * 0.445}]}></View>
+                // <View style={[styles.dot, {top: screenHeight * 0.505,
+                //     left: screenWidth * 0.4}]}></View>
+
+                // {/*     
+                //     this.line1= [{
+                //         x: screenWidth * 0.38,
+                //         y: screenHeight * 0.29,
+                //     }, {
+                //         x: screenWidth * 0.29,
+                //         y: screenHeight * 0.42,
+                //     }, {
+                //         x: screenWidth * 0.32,
+                //         y: screenHeight * 0.76,
+                //     }, {
+                //         x: screenWidth * 0.445,
+                //         y: screenHeight * 0.72,
+                //     }, {
+                //         x: screenWidth * 0.4,
+                //         y: screenHeight * 0.505,
+                //     }, {
+
+                //         x: screenWidth * 0.57,
+                //         y: screenHeight * 0.35,
+                //     }, {
+                //         x: screenWidth * 0.57,
+                //         y: screenHeight * 0.725,
+                //     }, {
+                //         x: screenWidth * 0.69,
+                //         y: screenHeight * 0.74,
+                //     }, {
+                //         x: screenWidth * 0.7,
+                //         y: screenHeight * 0.39,
+                //     }, ];
+                // */}
+
+                // <View style={[styles.dot, {top: screenHeight * 0.35,
+                //     left: screenWidth * 0.57}]}></View>
+                // <View style={[styles.dot, {top: screenHeight * 0.725,
+                //     left: screenWidth * 0.57}]}></View>
+                // <View style={[styles.dot, {top: screenHeight * 0.74,
+                //     left: screenWidth * 0.69}]}></View>
+                // <View style={[styles.dot, {top: screenHeight * 0.39,
+                //     left: screenWidth * 0.7}]}></View>
+        )
+    }
+}
+
+export default withNavigation(SixtyTracing);
